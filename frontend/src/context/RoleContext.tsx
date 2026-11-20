@@ -34,8 +34,8 @@ export const ROLE_CONFIGS: Record<ClinicalRole, RoleDescriptor> = {
     name: 'Patient Safety Director',
     icon: 'ShieldAlert',
     badge: 'Surveillance & Governance',
-    tagline: 'Hospital Analytics & Big Data Streams',
-    description: 'Institutional surveillance, DGIM streaming event counts, Bloom Filter health, and ML retraining.',
+    tagline: 'Healthcare AIML Surveillance & Model Governance',
+    description: 'Institutional AI safety monitoring, ensemble confidence scoring, model retraining, and clinical audit trail.',
     isNaiveMode: false
   }
 };

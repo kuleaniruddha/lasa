@@ -263,12 +263,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               {currentRole === 'Admin' ? <Activity className="w-5 h-5" /> : <GitCompare className="w-5 h-5" />}
             </div>
             <h4 className="font-bold text-sm text-surface-900 dark:text-surface-100 flex items-center justify-between">
-              <span>{currentRole === 'Admin' ? 'BDA Stream Analytics' : 'Dual-Drug Comparator'}</span>
+              <span>{currentRole === 'Admin' ? 'AIML Model Analytics' : 'Dual-Drug Comparator'}</span>
               <ArrowRight className="w-4 h-4 text-surface-400 group-hover:translate-x-1 transition-transform" />
             </h4>
             <p className="text-xs text-surface-500 dark:text-surface-400 mt-1">
               {currentRole === 'Admin'
-                ? 'DGIM sliding window, Bloom filter membership, and model retraining.'
+                ? 'Model classification benchmarks, ensemble evaluation metrics, and retraining.'
                 : 'Side-by-side Tall Man lettering, indication mismatch, and clinical recommendations.'}
             </p>
           </button>

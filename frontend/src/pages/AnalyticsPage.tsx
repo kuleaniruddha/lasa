@@ -96,13 +96,13 @@ export const AnalyticsPage: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-health-50 border border-health-200 text-health-700 text-xs font-semibold mb-2">
               <BrainCircuit className="w-3.5 h-3.5 text-health-600" />
-              <span>Honours AIML Research & Big Data Analytics Engine</span>
+              <span>Honours AI &amp; Machine Learning in Healthcare Research</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-extrabold text-surface-900 tracking-tight">
-              Medication Safety & Big Data Intelligence
+              Medication Safety &amp; AIML Clinical Intelligence
             </h2>
             <p className="text-xs sm:text-sm text-surface-500 mt-0.5 max-w-2xl">
-              Comprehensive analytics unifying 6-metric NLP string/phonetics, Soft-Voting Ensembles (RF + XGBoost + LSTM), and real-time Big Data Stream algorithms (Bloom Filter, DGIM, Flajolet-Martin).
+              Comprehensive clinical evaluation unifying 6-metric NLP string/phonetics, Bio_ClinicalBERT transformer embeddings, and Soft-Voting Ensembles (Random Forest + XGBoost + LSTM).
             </p>
           </div>
 
@@ -153,22 +153,22 @@ export const AnalyticsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* NEW SECTION: Big Data Analytics (BDA) Streaming Control Center */}
+      {/* SECTION: High-Throughput Formulary & Streaming Inference Engine */}
       <div className="bg-white dark:bg-surface-850 p-6 sm:p-8 rounded-3xl border-2 border-indigo-200 dark:border-indigo-800/60 shadow-xs space-y-6 transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-surface-100 dark:border-surface-750 gap-3">
           <div>
             <div className="flex items-center gap-2">
               <Server className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
               <h3 className="text-lg font-bold text-surface-900 dark:text-surface-100">
-                Big Data Analytics (BDA) Stream Processing
+                High-Throughput Clinical Stream Inference Engine
               </h3>
             </div>
             <p className="text-xs text-surface-500 dark:text-surface-400 mt-0.5">
-              Zero-latency probabilistic data structures & sliding window stream counters (CS BDA Domain)
+              Sub-millisecond formulary membership pre-checks &amp; real-time collision incident surveillance
             </p>
           </div>
           <span className="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 text-xs font-mono font-bold self-start sm:self-auto">
-            Kafka Stream: Active
+            Live Clinical Pipeline: Active
           </span>
         </div>
 
