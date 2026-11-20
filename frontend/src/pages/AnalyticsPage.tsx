@@ -154,67 +154,67 @@ export const AnalyticsPage: React.FC = () => {
       </div>
 
       {/* NEW SECTION: Big Data Analytics (BDA) Streaming Control Center */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border-2 border-indigo-200 shadow-xs space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-surface-100 gap-3">
+      <div className="bg-white dark:bg-surface-850 p-6 sm:p-8 rounded-3xl border-2 border-indigo-200 dark:border-indigo-800/60 shadow-xs space-y-6 transition-colors">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-surface-100 dark:border-surface-750 gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <Server className="w-5 h-5 text-indigo-600" />
-              <h3 className="text-lg font-bold text-surface-900">
+              <Server className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+              <h3 className="text-lg font-bold text-surface-900 dark:text-surface-100">
                 Big Data Analytics (BDA) Stream Processing
               </h3>
             </div>
-            <p className="text-xs text-surface-500 mt-0.5">
+            <p className="text-xs text-surface-500 dark:text-surface-400 mt-0.5">
               Zero-latency probabilistic data structures & sliding window stream counters (CS BDA Domain)
             </p>
           </div>
-          <span className="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-mono font-bold self-start sm:self-auto">
+          <span className="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 text-xs font-mono font-bold self-start sm:self-auto">
             Kafka Stream: Active
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Card 1: Bloom Filter */}
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div className="p-5 rounded-2xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200 dark:border-surface-700/80 space-y-3 transition-colors">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Database className="w-4 h-4 text-emerald-600" />
-                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">Bloom Filter</span>
+                <Database className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <span className="text-xs font-bold text-surface-800 dark:text-surface-200 uppercase tracking-wider">Bloom Filter</span>
               </div>
-              <span className="text-[11px] font-mono text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded font-bold">
+              <span className="text-[11px] font-mono text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/80 px-2 py-0.5 rounded font-bold border border-emerald-200 dark:border-emerald-800">
                 O(1) Lookup
               </span>
             </div>
-            <div className="space-y-1.5 text-xs text-slate-600">
+            <div className="space-y-1.5 text-xs text-surface-600 dark:text-surface-300">
               <div className="flex justify-between">
                 <span>Bit Array Size (m):</span>
-                <strong className="font-mono text-slate-900">{bloom.size.toLocaleString()} bits</strong>
+                <strong className="font-mono text-surface-900 dark:text-surface-100">{bloom.size.toLocaleString()} bits</strong>
               </div>
               <div className="flex justify-between">
                 <span>Hash Functions (k):</span>
-                <strong className="font-mono text-slate-900">{bloom.num_hashes} (Kirsch-Mitzenmacher)</strong>
+                <strong className="font-mono text-surface-900 dark:text-surface-100">{bloom.num_hashes} (Kirsch-Mitzenmacher)</strong>
               </div>
               <div className="flex justify-between">
                 <span>Indexed Elements (n):</span>
-                <strong className="font-mono text-slate-900">{bloom.items_added} drugs</strong>
+                <strong className="font-mono text-surface-900 dark:text-surface-100">{bloom.items_added} drugs</strong>
               </div>
               <div className="flex justify-between">
                 <span>Theoretical False Positive:</span>
-                <strong className="font-mono text-emerald-700">{(bloom.false_positive_rate * 100).toFixed(4)}%</strong>
+                <strong className="font-mono text-emerald-600 dark:text-emerald-400">{(bloom.false_positive_rate * 100).toFixed(4)}%</strong>
               </div>
             </div>
-            <div className="pt-2 border-t border-slate-200 text-[10px] text-slate-400">
+            <div className="pt-2 border-t border-surface-200 dark:border-surface-700/80 text-[10px] text-surface-400 dark:text-surface-400">
               Guarantees zero false negatives for high-speed formulary membership.
             </div>
           </div>
 
           {/* Card 2: DGIM Sliding Window Stream */}
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div className="p-5 rounded-2xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200 dark:border-surface-700/80 space-y-3 transition-colors">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Activity className="w-4 h-4 text-rose-600" />
-                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">DGIM Window Counter</span>
+                <Activity className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+                <span className="text-xs font-bold text-surface-800 dark:text-surface-200 uppercase tracking-wider">DGIM Window Counter</span>
               </div>
-              <span className="text-[11px] font-mono text-rose-700 bg-rose-100 px-2 py-0.5 rounded font-bold">
+              <span className="text-[11px] font-mono text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-950/80 px-2 py-0.5 rounded font-bold border border-rose-200 dark:border-rose-800">
                 {dgim.window_size}m Window
               </span>
             </div>
@@ -228,47 +228,47 @@ export const AnalyticsPage: React.FC = () => {
                     style={{ height: `${(pt.val / 16) * 100}%` }}
                     title={`${pt.time}: ${pt.val} alerts`}
                   />
-                  <span className="text-[9px] text-slate-400 font-mono">{pt.time}</span>
+                  <span className="text-[9px] text-surface-400 dark:text-surface-400 font-mono">{pt.time}</span>
                 </div>
               ))}
             </div>
 
-            <div className="pt-2 border-t border-slate-200 text-xs text-slate-600 flex justify-between">
+            <div className="pt-2 border-t border-surface-200 dark:border-surface-700/80 text-xs text-surface-600 dark:text-surface-300 flex justify-between">
               <span>Estimated High-Risk Count:</span>
-              <strong className="font-mono text-rose-700 text-sm font-bold">{dgim.estimated_high_risk_count} collisions</strong>
+              <strong className="font-mono text-rose-600 dark:text-rose-400 text-sm font-bold">{dgim.estimated_high_risk_count} collisions</strong>
             </div>
           </div>
 
           {/* Card 3: Flajolet-Martin Algorithm */}
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div className="p-5 rounded-2xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200 dark:border-surface-700/80 space-y-3 transition-colors">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Binary className="w-4 h-4 text-blue-600" />
-                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">Flajolet-Martin</span>
+                <Binary className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <span className="text-xs font-bold text-surface-800 dark:text-surface-200 uppercase tracking-wider">Flajolet-Martin</span>
               </div>
-              <span className="text-[11px] font-mono text-blue-700 bg-blue-100 px-2 py-0.5 rounded font-bold">
+              <span className="text-[11px] font-mono text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-950/80 px-2 py-0.5 rounded font-bold border border-blue-200 dark:border-blue-800">
                 Distinct Count
               </span>
             </div>
-            <div className="space-y-1.5 text-xs text-slate-600">
+            <div className="space-y-1.5 text-xs text-surface-600 dark:text-surface-300">
               <div className="flex justify-between">
                 <span>Estimated Distinct Drugs:</span>
-                <strong className="font-mono text-blue-700 text-sm font-bold">{fm.estimated_distinct}</strong>
+                <strong className="font-mono text-blue-600 dark:text-blue-400 text-sm font-bold">{fm.estimated_distinct}</strong>
               </div>
               <div className="flex justify-between">
                 <span>True Distinct Elements:</span>
-                <strong className="font-mono text-slate-900">{fm.actual_distinct}</strong>
+                <strong className="font-mono text-surface-900 dark:text-surface-100">{fm.actual_distinct}</strong>
               </div>
               <div className="flex justify-between">
                 <span>Hash Functions Sampled:</span>
-                <strong className="font-mono text-slate-900">{fm.num_hashes}</strong>
+                <strong className="font-mono text-surface-900 dark:text-surface-100">{fm.num_hashes}</strong>
               </div>
               <div className="flex justify-between">
                 <span>Estimation Accuracy:</span>
-                <strong className="font-mono text-emerald-700">96.8%</strong>
+                <strong className="font-mono text-emerald-600 dark:text-emerald-400">96.8%</strong>
               </div>
             </div>
-            <div className="pt-2 border-t border-slate-200 text-[10px] text-slate-400">
+            <div className="pt-2 border-t border-surface-200 dark:border-surface-700/80 text-[10px] text-surface-400 dark:text-surface-400">
               Trailing-zero bitmap estimation for streaming search query distinct items.
             </div>
           </div>

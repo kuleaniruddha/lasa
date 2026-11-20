@@ -297,41 +297,41 @@ export const MedicineComparisonPage: React.FC<MedicineComparisonPageProps> = ({
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-6 gap-2.5 text-center text-xs">
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] text-slate-500 font-semibold block uppercase">Levenshtein</span>
-                <span className="text-sm font-bold text-slate-900 block mt-0.5">{comparisonData.spellingSimilarity}%</span>
-                <span className="text-[9px] text-slate-400">Edit distance</span>
+              <div className="p-2.5 rounded-xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200/80 dark:border-surface-700/80 transition-colors">
+                <span className="text-[10px] text-surface-500 dark:text-surface-400 font-semibold block uppercase">Levenshtein</span>
+                <span className="text-sm font-bold text-surface-900 dark:text-surface-100 block mt-0.5">{comparisonData.spellingSimilarity}%</span>
+                <span className="text-[9px] text-surface-400">Edit distance</span>
               </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] text-slate-500 font-semibold block uppercase">BiSim (Jaccard)</span>
-                <span className="text-sm font-bold text-slate-900 block mt-0.5">
+              <div className="p-2.5 rounded-xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200/80 dark:border-surface-700/80 transition-colors">
+                <span className="text-[10px] text-surface-500 dark:text-surface-400 font-semibold block uppercase">BiSim (Jaccard)</span>
+                <span className="text-sm font-bold text-surface-900 dark:text-surface-100 block mt-0.5">
                   {Math.round((comparisonData.spellingSimilarity * 0.92))}%
                 </span>
-                <span className="text-[9px] text-slate-400">Bigram Jaccard</span>
+                <span className="text-[9px] text-surface-400">Bigram Jaccard</span>
               </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] text-slate-500 font-semibold block uppercase">Soundex</span>
-                <span className="text-sm font-bold text-slate-900 block mt-0.5">{comparisonData.phoneticSimilarity}%</span>
-                <span className="text-[9px] text-slate-400">Phonetic hashing</span>
+              <div className="p-2.5 rounded-xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200/80 dark:border-surface-700/80 transition-colors">
+                <span className="text-[10px] text-surface-500 dark:text-surface-400 font-semibold block uppercase">Soundex</span>
+                <span className="text-sm font-bold text-surface-900 dark:text-surface-100 block mt-0.5">{comparisonData.phoneticSimilarity}%</span>
+                <span className="text-[9px] text-surface-400">Phonetic hashing</span>
               </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] text-slate-500 font-semibold block uppercase">Sorensen-Dice</span>
-                <span className="text-sm font-bold text-slate-900 block mt-0.5">
+              <div className="p-2.5 rounded-xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200/80 dark:border-surface-700/80 transition-colors">
+                <span className="text-[10px] text-surface-500 dark:text-surface-400 font-semibold block uppercase">Sorensen-Dice</span>
+                <span className="text-sm font-bold text-surface-900 dark:text-surface-100 block mt-0.5">
                   {Math.round((comparisonData.spellingSimilarity * 0.95))}%
                 </span>
-                <span className="text-[9px] text-slate-400">Harmonic bigrams</span>
+                <span className="text-[9px] text-surface-400">Harmonic bigrams</span>
               </div>
-              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] text-slate-500 font-semibold block uppercase">Metaphone</span>
-                <span className="text-sm font-bold text-slate-900 block mt-0.5">{comparisonData.phoneticSimilarity}%</span>
-                <span className="text-[9px] text-slate-400">Acoustic cadence</span>
+              <div className="p-2.5 rounded-xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200/80 dark:border-surface-700/80 transition-colors">
+                <span className="text-[10px] text-surface-500 dark:text-surface-400 font-semibold block uppercase">Metaphone</span>
+                <span className="text-sm font-bold text-surface-900 dark:text-surface-100 block mt-0.5">{comparisonData.phoneticSimilarity}%</span>
+                <span className="text-[9px] text-surface-400">Acoustic cadence</span>
               </div>
-              <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200">
-                <span className="text-[10px] text-blue-700 font-semibold block uppercase">BioBERT Cosine</span>
-                <span className="text-sm font-bold text-blue-900 block mt-0.5">
+              <div className="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 transition-colors">
+                <span className="text-[10px] text-blue-700 dark:text-blue-300 font-semibold block uppercase">BioBERT Cosine</span>
+                <span className="text-sm font-bold text-blue-900 dark:text-blue-100 block mt-0.5">
                   {Math.round((comparisonData.semanticSimilarity * 0.92))}%
                 </span>
-                <span className="text-[9px] text-blue-600 font-medium">Neural embedding</span>
+                <span className="text-[9px] text-blue-600 dark:text-blue-400 font-medium">Neural embedding</span>
               </div>
             </div>
           </div>

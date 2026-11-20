@@ -584,8 +584,8 @@ export const CheckMedicinePage: React.FC<CheckMedicinePageProps> = ({
                   </span>
                 )}
                 {result.processingTimeMs !== undefined && (
-                  <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 font-mono text-[11px] flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-slate-500" /> {result.processingTimeMs} ms
+                  <span className="px-2.5 py-1 rounded-full bg-surface-100 dark:bg-surface-800 text-surface-700 dark:text-surface-300 font-mono text-[11px] flex items-center gap-1 border border-surface-200 dark:border-surface-700">
+                    <Clock className="w-3 h-3 text-surface-500 dark:text-surface-400" /> {result.processingTimeMs} ms
                   </span>
                 )}
               </div>
@@ -593,49 +593,49 @@ export const CheckMedicinePage: React.FC<CheckMedicinePageProps> = ({
 
             {/* 6-Metric NLP Vector Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] uppercase font-bold text-slate-500 block">Levenshtein</span>
-                <span className="text-base font-bold text-slate-900 mt-0.5 block">
+              <div className="p-3 rounded-xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200/80 dark:border-surface-700/80 transition-colors">
+                <span className="text-[10px] uppercase font-bold text-surface-500 dark:text-surface-400 block">Levenshtein</span>
+                <span className="text-base font-bold text-surface-900 dark:text-surface-100 mt-0.5 block">
                   {result.similarityBreakdown ? (result.similarityBreakdown.levenshtein * 100).toFixed(0) : result.spellingSimilarity}%
                 </span>
-                <span className="text-[10px] text-slate-400">Edit distance</span>
+                <span className="text-[10px] text-surface-400">Edit distance</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] uppercase font-bold text-slate-500 block">BiSim (Jaccard)</span>
-                <span className="text-base font-bold text-slate-900 mt-0.5 block">
+              <div className="p-3 rounded-xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200/80 dark:border-surface-700/80 transition-colors">
+                <span className="text-[10px] uppercase font-bold text-surface-500 dark:text-surface-400 block">BiSim (Jaccard)</span>
+                <span className="text-base font-bold text-surface-900 dark:text-surface-100 mt-0.5 block">
                   {result.similarityBreakdown ? (result.similarityBreakdown.bisim * 100).toFixed(0) : '78'}%
                 </span>
-                <span className="text-[10px] text-slate-400">Character bigrams</span>
+                <span className="text-[10px] text-surface-400">Character bigrams</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] uppercase font-bold text-slate-500 block">Soundex Code</span>
-                <span className="text-base font-bold text-slate-900 mt-0.5 block">
+              <div className="p-3 rounded-xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200/80 dark:border-surface-700/80 transition-colors">
+                <span className="text-[10px] uppercase font-bold text-surface-500 dark:text-surface-400 block">Soundex Code</span>
+                <span className="text-base font-bold text-surface-900 dark:text-surface-100 mt-0.5 block">
                   {result.similarityBreakdown ? (result.similarityBreakdown.soundex * 100).toFixed(0) : result.phoneticSimilarity}%
                 </span>
-                <span className="text-[10px] text-slate-400">Phonetic hashing</span>
+                <span className="text-[10px] text-surface-400">Phonetic hashing</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] uppercase font-bold text-slate-500 block">Sorensen-Dice</span>
-                <span className="text-base font-bold text-slate-900 mt-0.5 block">
+              <div className="p-3 rounded-xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200/80 dark:border-surface-700/80 transition-colors">
+                <span className="text-[10px] uppercase font-bold text-surface-500 dark:text-surface-400 block">Sorensen-Dice</span>
+                <span className="text-base font-bold text-surface-900 dark:text-surface-100 mt-0.5 block">
                   {result.similarityBreakdown ? (result.similarityBreakdown.dice * 100).toFixed(0) : '82'}%
                 </span>
-                <span className="text-[10px] text-slate-400">Harmonic bigrams</span>
+                <span className="text-[10px] text-surface-400">Harmonic bigrams</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] uppercase font-bold text-slate-500 block">Metaphone</span>
-                <span className="text-base font-bold text-slate-900 mt-0.5 block">
+              <div className="p-3 rounded-xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200/80 dark:border-surface-700/80 transition-colors">
+                <span className="text-[10px] uppercase font-bold text-surface-500 dark:text-surface-400 block">Metaphone</span>
+                <span className="text-base font-bold text-surface-900 dark:text-surface-100 mt-0.5 block">
                   {result.similarityBreakdown ? (result.similarityBreakdown.metaphone * 100).toFixed(0) : '85'}%
                 </span>
-                <span className="text-[10px] text-slate-400">Acoustic cadence</span>
+                <span className="text-[10px] text-surface-400">Acoustic cadence</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-blue-50/80 border border-blue-200">
-                <span className="text-[10px] uppercase font-bold text-blue-700 block">Bio_ClinicalBERT</span>
-                <span className="text-base font-bold text-blue-900 mt-0.5 block">
+              <div className="p-3 rounded-xl bg-blue-50/80 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 transition-colors">
+                <span className="text-[10px] uppercase font-bold text-blue-700 dark:text-blue-300 block">Bio_ClinicalBERT</span>
+                <span className="text-base font-bold text-blue-900 dark:text-blue-100 mt-0.5 block">
                   {result.similarityBreakdown ? (result.similarityBreakdown.bertCosine * 100).toFixed(0) : '88'}%
                 </span>
                 <span className="text-[10px] text-blue-600 font-medium">Neural embedding</span>

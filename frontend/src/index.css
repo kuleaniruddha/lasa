@@ -129,6 +129,46 @@ html.dark .bg-black\/60 {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
+/* Fallback mappings for un-tokenized slate palette in Dark Mode */
+html.dark .bg-slate-50 {
+  background-color: #131c2e;
+}
+html.dark .bg-slate-100 {
+  background-color: #1e293b;
+}
+html.dark .border-slate-200 {
+  border-color: #243044;
+}
+html.dark .border-slate-200\/80 {
+  border-color: rgba(36, 48, 68, 0.8);
+}
+html.dark .text-slate-900 {
+  color: #f8fafc;
+}
+html.dark .text-slate-800 {
+  color: #f1f5f9;
+}
+html.dark .text-slate-700 {
+  color: #e2e8f0;
+}
+html.dark .text-slate-600 {
+  color: #cbd5e1;
+}
+html.dark .text-slate-500 {
+  color: #94a3b8;
+}
+html.dark .text-slate-400 {
+  color: #64748b;
+}
+
+/* Card highlight borders in dark mode */
+html.dark .border-indigo-200 {
+  border-color: rgba(99, 102, 241, 0.35);
+}
+html.dark .border-health-200 {
+  border-color: rgba(12, 135, 235, 0.35);
+}
+
 /* Form inputs & focus states in dark mode */
 html.dark input,
 html.dark textarea,
