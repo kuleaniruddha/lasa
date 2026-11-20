@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -31,8 +32,11 @@ export default {
           500: '#64748b',
           600: '#475569',
           700: '#334155',
+          750: '#243044',
           800: '#1e293b',
+          850: '#151f32',
           900: '#0f172a',
+          950: '#090d16',
         },
         risk: {
           high: '#dc2626',

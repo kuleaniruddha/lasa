@@ -47,7 +47,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-surface-50 flex">
+    <div className="min-h-screen bg-surface-50 dark:bg-surface-950 text-surface-900 dark:text-surface-100 flex transition-colors duration-200">
       {/* Persistent / Toggleable Left Sidebar */}
       <Sidebar
         currentTab={currentTab}
@@ -74,6 +74,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
           onOpenMobileMenu={handleToggleSidebar}
           isSidebarOpen={sidebarOpen}
           alertCount={alertCount}
+          currentUser={currentUser}
         />
 
         {/* Scrollable Page Body */}

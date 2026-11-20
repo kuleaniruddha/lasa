@@ -4,23 +4,139 @@
 
 @layer base {
   body {
-    @apply bg-surface-50 text-surface-900 antialiased font-sans;
+    @apply bg-surface-50 text-surface-900 dark:bg-surface-950 dark:text-surface-100 antialiased font-sans transition-colors duration-200;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
-  /* Accessible Light Theme Scrollbars */
+  /* Accessible Theme Scrollbars */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 9999px;
+    @apply bg-surface-300 dark:bg-surface-700 rounded-full;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    @apply bg-surface-400 dark:bg-surface-600;
   }
+}
+
+/* Comprehensive Dark Mode Theme Tokens for Seamless UI Consistency */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark .bg-white {
+  background-color: #0f172a;
+}
+
+html.dark .bg-surface-50 {
+  background-color: #131c2e;
+}
+
+html.dark .bg-surface-100 {
+  background-color: #1e293b;
+}
+
+html.dark .hover\:bg-surface-50:hover {
+  background-color: #1e293b;
+}
+
+html.dark .hover\:bg-surface-100:hover {
+  background-color: #243044;
+}
+
+html.dark .border-surface-100 {
+  border-color: #1e293b;
+}
+
+html.dark .border-surface-200 {
+  border-color: #243044;
+}
+
+html.dark .border-surface-300 {
+  border-color: #334155;
+}
+
+html.dark .text-surface-900 {
+  color: #f8fafc;
+}
+
+html.dark .text-surface-800 {
+  color: #f1f5f9;
+}
+
+html.dark .text-surface-700 {
+  color: #e2e8f0;
+}
+
+html.dark .text-surface-600 {
+  color: #cbd5e1;
+}
+
+html.dark .text-surface-500 {
+  color: #94a3b8;
+}
+
+html.dark .divide-surface-100 > :not([hidden]) ~ :not([hidden]),
+html.dark .divide-surface-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #1e293b;
+}
+
+/* Contrast enhancement for clinical category badges in dark mode */
+html.dark .bg-health-50 {
+  background-color: rgba(12, 135, 235, 0.15);
+  color: #7cc5fb;
+}
+
+html.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+}
+
+html.dark .bg-amber-50 {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+}
+
+html.dark .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+
+html.dark .bg-blue-50 {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+}
+
+html.dark .bg-indigo-50 {
+  background-color: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+}
+
+html.dark .bg-purple-50 {
+  background-color: rgba(168, 85, 247, 0.15);
+  color: #d8b4fe;
+}
+
+/* Modals & Backdrop */
+html.dark .bg-surface-900\/50,
+html.dark .bg-black\/50,
+html.dark .bg-black\/60 {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Form inputs & focus states in dark mode */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  color: #f8fafc;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b;
 }

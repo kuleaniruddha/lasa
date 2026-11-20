@@ -1,42 +1,92 @@
-# Dependencies
+# ==========================================
+# Dependency directories
+# ==========================================
 node_modules/
-frontend/node_modules/
+*/node_modules/
+web_modules/
 
-# Production builds
+# ==========================================
+# Build outputs and distribution
+# ==========================================
 dist/
-frontend/dist/
+dist-ssr/
+build/
+*.local
+.cache/
+.parcel-cache/
+.eslintcache
 
-# Python caches and virtualenvs
+# ==========================================
+# Python artifacts & Virtual Environments
+# ==========================================
 __pycache__/
-backend/__pycache__/
+*/__pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
 env/
 venv/
-.venv/
 ENV/
+.venv/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Environment files & Secrets
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# ==========================================
+# Environment variables, secrets & credentials
+# ==========================================
 .env
-.env.local
-.env.*.local
-backend/firebase_credentials.json
+.env.*
+!.env.example
+cred.txt
+credentials.json
+*firebase-adminsdk*.json
 *.pem
 *.key
 
-# Operating System & IDE Files
-.DS_Store
-Thumbs.db
-.vscode/
+# ==========================================
+# Logs
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==========================================
+# IDE & System Files
+# ==========================================
 .idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-# Large raw dataset archives
-*.zip
-*.tar.gz
-*.rar
-*.7z
+*.sw?
+.DS_Store
+Thumbs.db
+desktop.ini

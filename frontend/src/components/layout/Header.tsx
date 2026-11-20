@@ -14,6 +14,8 @@ import {
 import { Medicine } from '../../types/lasa';
 import { lasaService } from '../../services/lasaService';
 import { RiskBadge } from '../common/RiskBadge';
+import { ThemeToggle } from '../common/ThemeToggle';
+import { RoleSwitcher } from '../common/RoleSwitcher';
 
 interface HeaderProps {
   currentTab: string;
@@ -21,6 +23,7 @@ interface HeaderProps {
   onOpenMobileMenu: () => void;
   isSidebarOpen?: boolean;
   alertCount: number;
+  currentUser?: { displayName?: string; email?: string; role?: string } | null;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -28,7 +31,8 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigate,
   onOpenMobileMenu,
   isSidebarOpen = true,
-  alertCount
+  alertCount,
+  currentUser
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Medicine[]>([]);
@@ -91,8 +95,20 @@ export const Header: React.FC<HeaderProps> = ({
     onNavigate('check-medicine', med.name);
   };
 
+  const displayName = currentUser?.displayName 
+    ? currentUser.displayName.replace(/,.*$/, '') 
+    : (currentUser?.email ? currentUser.email.split('@')[0] : 'Clinical User');
+  const roleTitle = currentUser?.role || 'Clinician';
+  const avatarInitials = displayName
+    .split(' ')
+    .map(w => w[0])
+    .filter(c => c && /[A-Za-z]/.test(c))
+    .slice(-2)
+    .join('')
+    .toUpperCase() || 'CU';
+
   return (
-    <header className="sticky top-0 z-30 h-16 bg-white/95 backdrop-blur-md border-b border-surface-200 px-4 sm:px-6 flex items-center justify-between">
+    <header className="sticky top-0 z-30 h-16 bg-white/95 dark:bg-surface-900/95 backdrop-blur-md border-b border-surface-200 dark:border-surface-800 px-4 sm:px-6 flex items-center justify-between transition-colors duration-200">
       {/* Left: Sidebar toggle & breadcrumbs */}
       <div className="flex items-center gap-3">
         <button
@@ -100,10 +116,10 @@ export const Header: React.FC<HeaderProps> = ({
           onClick={onOpenMobileMenu}
           title={isSidebarOpen ? "Collapse sidebar (Ctrl+B)" : "Expand sidebar (Ctrl+B)"}
           aria-label="Toggle sidebar"
-          className="p-2 -ml-2 rounded-lg text-surface-500 hover:text-surface-900 hover:bg-surface-100 transition-colors flex items-center justify-center cursor-pointer"
+          className="p-2 -ml-2 rounded-lg text-surface-500 hover:text-surface-900 dark:text-surface-400 dark:hover:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors flex items-center justify-center cursor-pointer"
         >
           {isSidebarOpen ? (
-            <PanelLeftClose className="w-5 h-5 hidden lg:block text-surface-600 hover:text-surface-900" />
+            <PanelLeftClose className="w-5 h-5 hidden lg:block text-surface-600 dark:text-surface-300 hover:text-surface-900 dark:hover:text-white" />
           ) : (
             <PanelLeftOpen className="w-5 h-5 hidden lg:block text-health-600 hover:text-health-700" />
           )}
@@ -111,12 +127,12 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
 
         <div>
-          <div className="flex items-center gap-1.5 text-xs text-surface-500 font-medium">
-            <span>LASA-SAFE</span>
+          <div className="flex items-center gap-1.5 text-xs text-surface-500 dark:text-surface-400 font-medium">
+            <span>LASA-GUARD</span>
             <ChevronRight className="w-3.5 h-3.5 text-surface-400" />
-            <span className="text-health-700 font-semibold">{currentInfo.title}</span>
+            <span className="text-health-700 dark:text-health-400 font-semibold">{currentInfo.title}</span>
           </div>
-          <h1 className="text-sm sm:text-base font-bold text-surface-900 leading-tight">
+          <h1 className="text-sm sm:text-base font-bold text-surface-900 dark:text-surface-100 leading-tight">
             {currentInfo.title}
           </h1>
         </div>
@@ -243,24 +259,32 @@ export const Header: React.FC<HeaderProps> = ({
           )}
         </div>
 
+        {/* Role Perspective Switcher */}
+        <RoleSwitcher />
+
+        {/* Dark / Light Mode Toggle Button */}
+        <ThemeToggle />
+
         {/* Settings Shortcut */}
         <button
           onClick={() => onNavigate('settings')}
-          className="p-2 rounded-xl text-surface-500 hover:text-surface-900 hover:bg-surface-100 transition-colors"
+          className="p-2 rounded-xl text-surface-500 hover:text-surface-900 dark:text-surface-400 dark:hover:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors"
           title="System Settings"
         >
           <Settings className="w-4 h-4" />
         </button>
 
         {/* Role Avatar Badge */}
-        <div className="hidden sm:flex items-center gap-2 pl-2 border-l border-surface-200">
+        <div className="hidden sm:flex items-center gap-2 pl-2 border-l border-surface-200 dark:border-surface-700">
           <div className="w-8 h-8 rounded-full bg-health-600 text-white font-bold text-xs flex items-center justify-center shadow-2xs">
-            AK
+            {avatarInitials}
           </div>
           <div className="text-left leading-tight">
-            <span className="block text-xs font-semibold text-surface-900">Dr. Aniruddha</span>
-            <span className="text-[10px] text-health-600 font-medium flex items-center gap-0.5">
-              <ShieldCheck className="w-3 h-3" /> Doctor
+            <span className="block text-xs font-semibold text-surface-900 dark:text-surface-100">
+              {displayName}
+            </span>
+            <span className="text-[10px] text-health-600 dark:text-health-400 font-medium flex items-center gap-0.5">
+              <ShieldCheck className="w-3 h-3" /> {roleTitle}
             </span>
           </div>
         </div>

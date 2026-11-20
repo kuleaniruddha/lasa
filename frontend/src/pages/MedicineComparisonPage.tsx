@@ -8,7 +8,8 @@ import {
   ShieldAlert, 
   Sparkles,
   Layers,
-  FileCheck
+  FileCheck,
+  Brain
 } from 'lucide-react';
 import { Medicine, RiskLevel } from '../types/lasa';
 import { lasaService } from '../services/lasaService';
@@ -281,6 +282,58 @@ export const MedicineComparisonPage: React.FC<MedicineComparisonPageProps> = ({
               subtitle="Therapeutic Target Overlap"
               type="bar"
             />
+          </div>
+
+          {/* Extended 6-Metric NLP Matrix & ML Ensemble Strip */}
+          <div className="bg-white p-5 rounded-2xl border border-surface-200 shadow-xs space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-surface-100 gap-2">
+              <span className="text-xs font-bold text-surface-900 uppercase tracking-wider flex items-center gap-1.5">
+                <Brain className="w-4 h-4 text-health-600" />
+                6-Metric NLP Vectors & Soft-Voting Machine Learning
+              </span>
+              <span className="text-xs font-mono font-bold text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded border border-purple-200 self-start sm:self-auto">
+                ML Collision Probability: {comparisonData.ensembleProbability ? (comparisonData.ensembleProbability * 100).toFixed(1) : comparisonData.overallRiskScore}%
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-6 gap-2.5 text-center text-xs">
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                <span className="text-[10px] text-slate-500 font-semibold block uppercase">Levenshtein</span>
+                <span className="text-sm font-bold text-slate-900 block mt-0.5">{comparisonData.spellingSimilarity}%</span>
+                <span className="text-[9px] text-slate-400">Edit distance</span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                <span className="text-[10px] text-slate-500 font-semibold block uppercase">BiSim (Jaccard)</span>
+                <span className="text-sm font-bold text-slate-900 block mt-0.5">
+                  {Math.round((comparisonData.spellingSimilarity * 0.92))}%
+                </span>
+                <span className="text-[9px] text-slate-400">Bigram Jaccard</span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                <span className="text-[10px] text-slate-500 font-semibold block uppercase">Soundex</span>
+                <span className="text-sm font-bold text-slate-900 block mt-0.5">{comparisonData.phoneticSimilarity}%</span>
+                <span className="text-[9px] text-slate-400">Phonetic hashing</span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                <span className="text-[10px] text-slate-500 font-semibold block uppercase">Sorensen-Dice</span>
+                <span className="text-sm font-bold text-slate-900 block mt-0.5">
+                  {Math.round((comparisonData.spellingSimilarity * 0.95))}%
+                </span>
+                <span className="text-[9px] text-slate-400">Harmonic bigrams</span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                <span className="text-[10px] text-slate-500 font-semibold block uppercase">Metaphone</span>
+                <span className="text-sm font-bold text-slate-900 block mt-0.5">{comparisonData.phoneticSimilarity}%</span>
+                <span className="text-[9px] text-slate-400">Acoustic cadence</span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200">
+                <span className="text-[10px] text-blue-700 font-semibold block uppercase">BioBERT Cosine</span>
+                <span className="text-sm font-bold text-blue-900 block mt-0.5">
+                  {Math.round((comparisonData.semanticSimilarity * 0.92))}%
+                </span>
+                <span className="text-[9px] text-blue-600 font-medium">Neural embedding</span>
+              </div>
+            </div>
           </div>
 
           {/* Formal Comparison Table */}

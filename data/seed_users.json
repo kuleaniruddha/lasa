@@ -1,0 +1,47 @@
+[
+  {
+    "user_id": "usr_doc_01",
+    "username": "doctor",
+    "email": "doctor@lasaguard.health",
+    "password_hash": "scrypt:32768:8:1$DX6DrZvzHhSytwka$a09561513189167dfcfc90574cd1992ae9af7b418b54f1dc537c53785dfa24d5c068fd62cb1d7ae7721e4db204fee5573cd21dbe8a3aa850fe3a3acf1088c9f9",
+    "role": "Doctor",
+    "full_name": "Dr. Sarah Mitchell, MD",
+    "title": "Attending Physician"
+  },
+  {
+    "user_id": "usr_doc_02",
+    "username": "clinician",
+    "email": "clinician@lasaguard.health",
+    "password_hash": "scrypt:32768:8:1$b1tlhuKFReyZU9Ob$e2c7dffa0d108784989bde7ed6ce2ee1b9102952f358c18eb03d0e417098ad58e2aefced48379f123e4c113825137068c4b109e4fd8c8aefcf31848f2c8a00f0",
+    "role": "Doctor",
+    "full_name": "Dr. Sarah Mitchell, MD",
+    "title": "Attending Physician"
+  },
+  {
+    "user_id": "usr_pharm_01",
+    "username": "pharmacist",
+    "email": "pharmacist@lasaguard.health",
+    "password_hash": "scrypt:32768:8:1$VBC0nLrUBfbUtqBx$e3ff8fe616d76b2b4aa4f026823a9854493970e9b329cdb44d614b6cc14623fa202cd3e1ce636e7d22261af8c21f1c2b5e57e57a6e5ecb6b33ac65fe8cbd22f1",
+    "role": "Pharmacist",
+    "full_name": "James Wilson, PharmD, RPh",
+    "title": "Lead Clinical Pharmacist"
+  },
+  {
+    "user_id": "usr_asst_01",
+    "username": "assistant",
+    "email": "assistant@lasaguard.health",
+    "password_hash": "scrypt:32768:8:1$zEFtDtvCcSeludjE$e255161e9bba6d783101d28bf05d1a6e8b72614f92d277653df03ac26ed6f082b6d2360b5d46da495d2c3b9dcef094fe1492d7e682856f5db383340d092290ed",
+    "role": "Assistant",
+    "full_name": "Emily Chen, CPhT",
+    "title": "Pharmacy Assistant / Technician"
+  },
+  {
+    "user_id": "usr_admin_01",
+    "username": "safety.director",
+    "email": "safety.director@lasaguard.health",
+    "password_hash": "scrypt:32768:8:1$PDqC3F9yZvYi4xL8$283647c00f3ae97f8ed08badff9b0a01de81da414fb8fb8181f2c800078c60c20b6dd3bcf57dd4bc83072ef014290ce1213124786a81584f15ac176ef028cd63",
+    "role": "Admin",
+    "full_name": "Dr. Alex Vance, Chief Pharmacy Officer",
+    "title": "Patient Safety Director"
+  }
+]

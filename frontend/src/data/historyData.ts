@@ -10,7 +10,7 @@ export const INITIAL_HISTORY: AnalysisHistoryItem[] = [
     lasaScore: 89,
     riskLevel: 'High',
     source: 'Prescription OCR',
-    user: 'Dr. Aniruddha Kule',
+    user: 'Dr. Sarah Mitchell (Doctor)',
     status: 'Flagged'
   },
   {
@@ -22,7 +22,7 @@ export const INITIAL_HISTORY: AnalysisHistoryItem[] = [
     lasaScore: 85,
     riskLevel: 'High',
     source: 'Manual Search',
-    user: 'Dr. Aniruddha Kule',
+    user: 'James Wilson, PharmD (Pharmacist)',
     status: 'Reviewed'
   },
   {
@@ -34,7 +34,7 @@ export const INITIAL_HISTORY: AnalysisHistoryItem[] = [
     lasaScore: 76,
     riskLevel: 'Medium',
     source: 'Prescription OCR',
-    user: 'Dr. Aniruddha Kule',
+    user: 'Emily Chen, CPhT (Assistant)',
     status: 'Reviewed'
   },
   {
@@ -46,7 +46,7 @@ export const INITIAL_HISTORY: AnalysisHistoryItem[] = [
     lasaScore: 95,
     riskLevel: 'High',
     source: 'Manual Search',
-    user: 'Dr. Aniruddha Kule',
+    user: 'Dr. Sarah Mitchell (Doctor)',
     status: 'Flagged'
   },
   {
@@ -58,7 +58,7 @@ export const INITIAL_HISTORY: AnalysisHistoryItem[] = [
     lasaScore: 61,
     riskLevel: 'Low',
     source: 'Voice Input',
-    user: 'Dr. Aniruddha Kule',
+    user: 'James Wilson, PharmD (Pharmacist)',
     status: 'Resolved'
   },
   {
@@ -70,7 +70,7 @@ export const INITIAL_HISTORY: AnalysisHistoryItem[] = [
     lasaScore: 96,
     riskLevel: 'High',
     source: 'Prescription OCR',
-    user: 'Dr. Aniruddha Kule',
+    user: 'Emily Chen, CPhT (Assistant)',
     status: 'Flagged'
   },
   {
@@ -82,7 +82,7 @@ export const INITIAL_HISTORY: AnalysisHistoryItem[] = [
     lasaScore: 18,
     riskLevel: 'Clear',
     source: 'Manual Search',
-    user: 'Dr. Aniruddha Kule',
+    user: 'Dr. Sarah Mitchell (Doctor)',
     status: 'Reviewed'
   },
   {
@@ -94,7 +94,7 @@ export const INITIAL_HISTORY: AnalysisHistoryItem[] = [
     lasaScore: 22,
     riskLevel: 'Clear',
     source: 'Prescription OCR',
-    user: 'Dr. Aniruddha Kule',
+    user: 'Emily Chen, CPhT (Assistant)',
     status: 'Reviewed'
   },
   {
@@ -106,7 +106,7 @@ export const INITIAL_HISTORY: AnalysisHistoryItem[] = [
     lasaScore: 84,
     riskLevel: 'High',
     source: 'Manual Search',
-    user: 'Dr. Aniruddha Kule',
+    user: 'Dr. Alex Vance (Safety Director)',
     status: 'Resolved'
   },
   {
@@ -118,7 +118,7 @@ export const INITIAL_HISTORY: AnalysisHistoryItem[] = [
     lasaScore: 72,
     riskLevel: 'Medium',
     source: 'Voice Input',
-    user: 'Dr. Aniruddha Kule',
+    user: 'James Wilson, PharmD (Pharmacist)',
     status: 'Reviewed'
   }
 ];

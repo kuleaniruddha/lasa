@@ -1,5 +1,27 @@
 export type RiskLevel = 'High' | 'Medium' | 'Low' | 'Clear';
 
+export type ClinicalRole = 'Doctor' | 'Pharmacist' | 'Assistant' | 'Admin';
+
+export interface UserProfile {
+  uid: string;
+  email: string;
+  displayName: string;
+  role: ClinicalRole;
+  title?: string;
+  hospital?: string;
+  licenseId?: string;
+}
+
+export interface RoleDescriptor {
+  id: ClinicalRole;
+  name: string;
+  icon: string;
+  badge: string;
+  tagline: string;
+  description: string;
+  isNaiveMode?: boolean;
+}
+
 export interface Medicine {
   id: string;
   name: string;
@@ -38,6 +60,48 @@ export interface LASAPair {
   clinicalAdvice: string;
 }
 
+export interface SimilarityBreakdown {
+  levenshtein: number;
+  bisim: number;
+  soundex: number;
+  dice: number;
+  metaphone: number;
+  bertCosine: number;
+}
+
+export interface ClinicianOverrideRecord {
+  id: string;
+  drug1: string;
+  drug2: string;
+  reason: string;
+  clinicianName: string;
+  clinicianLicense: string;
+  timestamp: string;
+  userId?: string;
+}
+
+export interface BDAMetrics {
+  bloom_filter?: {
+    size: number;
+    num_hashes: number;
+    items_added: number;
+    false_positive_rate: number;
+    bits_set: number;
+  };
+  dgim?: {
+    window_size: number;
+    current_timestamp: number;
+    total_buckets: number;
+    estimated_high_risk_count: number;
+    bucket_sizes: number[];
+  };
+  flajolet_martin?: {
+    num_hashes: number;
+    estimated_distinct: number;
+    actual_distinct: number;
+  };
+}
+
 export interface LASAAnalysisResult {
   queryMedicine: Medicine;
   hasRisk: boolean;
@@ -51,9 +115,16 @@ export interface LASAAnalysisResult {
   clinicalAdvice: string;
   tallManQuery: string;
   tallManPartner?: string;
-  aiExplanation: string;
+  aiExplanation?: string;
   timestamp: string;
   detectionSource: 'Manual Search' | 'Prescription OCR' | 'Voice Input';
+  // Multi-Engine ML/BDA Surveillance Types
+  similarityBreakdown?: SimilarityBreakdown;
+  ensembleProbability?: number;
+  clusterId?: number;
+  clusterMembers?: string[];
+  bloomHit?: boolean;
+  processingTimeMs?: number;
 }
 
 export interface OCRMedicineItem {

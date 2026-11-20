@@ -1,0 +1,11 @@
+drug1,drug2,severity_description
+Celebrex,Warfarin,Increased risk of major gastrointestinal bleeding
+Lasix,Gentamicin,Potentiated ototoxicity and nephrotoxicity
+Clonidine,Propranolol,Paradoxical severe rebound hypertension
+Metformin,Contrast Dye,Risk of acute lactic acidosis
+Prozac,Tramadol,Risk of Serotonin Syndrome
+Alprazolam,Ketoconazole,Increased plasma concentration of Alprazolam
+Prednisone,Ibuprofen,Increased risk of severe GI ulceration
+Lamictal,Valproic Acid,Doubled risk of toxic epidermal necrolysis (Stevens-Johnson)
+Dopamine,MAO Inhibitors,Severe hypertensive crisis
+Zyrtec,Alcohol,Enhanced central nervous system depression

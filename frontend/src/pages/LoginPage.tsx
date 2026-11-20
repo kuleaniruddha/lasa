@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { 
   ShieldAlert, 
   BrainCircuit, 
-  Database, 
-  Activity, 
   ArrowRight,
   Stethoscope,
   Lock,
@@ -14,22 +12,27 @@ import {
   CheckCircle2,
   Eye,
   EyeOff,
-  Sparkles
+  Sparkles,
+  Pill,
+  FileCheck,
+  Building2
 } from 'lucide-react';
 import { ClinicalDisclaimer } from '../components/common/ClinicalDisclaimer';
-import { firebaseAuthService } from '../services/firebase';
+import { authService, PRESET_ACCOUNTS } from '../services/authService';
+import { ClinicalRole } from '../types/lasa';
+import { ThemeToggle } from '../components/common/ThemeToggle';
 
 interface LoginPageProps {
   onLogin?: () => void;
+  onBypass?: (role?: ClinicalRole) => void;
 }
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBypass }) => {
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('Dr. Aniruddha Kule');
-  const [role, setRole] = useState('Doctor');
-  const [rememberMe, setRememberMe] = useState(true);
+  const [fullName, setFullName] = useState('');
+  const [role, setRole] = useState<ClinicalRole>('Doctor');
   const [showPassword, setShowPassword] = useState(false);
   
   const [isLoading, setIsLoading] = useState(false);
@@ -55,69 +58,43 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
 
     try {
       if (mode === 'signin') {
-        await firebaseAuthService.signIn(email, password);
-        setSuccessMessage('Authenticated successfully! Loading clinical portal...');
+        await authService.signIn(email, password);
+        setSuccessMessage('Authenticated successfully! Opening clinical workspace...');
         if (onLogin) onLogin();
       } else {
-        await firebaseAuthService.signUp(email, password, fullName, role);
-        setSuccessMessage('Account registered in Firebase! Opening clinical portal...');
+        await authService.signUp(email, password, fullName || email.split('@')[0], role);
+        setSuccessMessage('Account registered successfully! Opening clinical workspace...');
         if (onLogin) onLogin();
       }
     } catch (err: any) {
-      console.error('Firebase Auth Error:', err);
-      const code = err?.code || '';
-      if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found') {
-        setErrorMessage('Invalid email or password. If you do not have an account yet, switch to "Create Account" above.');
-      } else if (code === 'auth/email-already-in-use') {
-        setErrorMessage('This email is already registered in Firebase. Please select "Sign In" instead.');
-      } else if (code === 'auth/weak-password') {
-        setErrorMessage('The password is too weak. Please use at least 6 characters.');
-      } else if (code === 'auth/invalid-email') {
-        setErrorMessage('Please provide a valid clinical email address.');
-      } else {
-        setErrorMessage(err?.message || 'Authentication failed. Please verify your Firebase connection.');
-      }
+      console.error('Authentication Error:', err);
+      setErrorMessage(err?.message || 'Authentication failed. Please verify credentials.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Quick fill helper for convenience
-  const handleQuickDemo = async () => {
-    const demoEmail = 'dr.aniruddha@lasasafe.hospital.org';
-    const demoPass = 'Doctor1234!';
-    setEmail(demoEmail);
-    setPassword(demoPass);
+  // Quick 1-click login for any clinical role
+  const handleRoleQuickLogin = async (selectedRole: ClinicalRole) => {
     setErrorMessage(null);
     setIsLoading(true);
-
     try {
-      // Try sign in first
-      await firebaseAuthService.signIn(demoEmail, demoPass);
+      await authService.loginAsRole(selectedRole);
+      setSuccessMessage(`Logged in as ${selectedRole}!`);
       if (onLogin) onLogin();
-    } catch (signInErr: any) {
-      // If user does not exist in Firebase yet, auto-create it!
-      if (signInErr?.code === 'auth/user-not-found' || signInErr?.code === 'auth/invalid-credential') {
-        try {
-          await firebaseAuthService.signUp(demoEmail, demoPass, 'Dr. Aniruddha Kule', 'Doctor');
-          if (onLogin) onLogin();
-        } catch (signUpErr: any) {
-          setErrorMessage('Could not sign in with demo credentials: ' + (signUpErr.message || 'Error'));
-        }
-      } else {
-        setErrorMessage(signInErr.message || 'Could not authenticate demo user.');
-      }
+      if (onBypass) onBypass(selectedRole);
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Could not authenticate demo user.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-surface-50 flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8">
-      <div className="max-w-5xl w-full bg-white rounded-3xl border border-surface-200 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[620px]">
+    <div className="min-h-screen bg-surface-50 dark:bg-surface-950 flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8 transition-colors duration-200">
+      <div className="max-w-5xl w-full bg-white dark:bg-surface-900 rounded-3xl border border-surface-200 dark:border-surface-800 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[620px]">
         {/* Left Branding & Trust Indicators (5 cols) */}
         <div className="lg:col-span-5 bg-gradient-to-br from-health-900 via-health-800 to-health-700 text-white p-8 sm:p-10 flex flex-col justify-between relative overflow-hidden">
-          {/* Background decorative shapes */}
           <div className="absolute -right-16 -bottom-16 w-64 h-64 rounded-full bg-health-600/20 blur-2xl pointer-events-none" />
           <div className="absolute -left-12 -top-12 w-48 h-48 rounded-full bg-health-400/20 blur-xl pointer-events-none" />
 
@@ -128,182 +105,255 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 <ShieldAlert className="w-7 h-7 text-health-300" />
               </div>
               <div>
-                <h1 className="text-xl font-extrabold tracking-tight">LASA-SAFE</h1>
+                <h1 className="text-xl font-extrabold tracking-tight">LASA-GUARD</h1>
                 <p className="text-xs text-health-200 font-medium">Detect. Compare. Alert. Prevent.</p>
               </div>
             </div>
 
             <h2 className="text-2xl font-bold tracking-tight text-white mb-3 leading-snug">
-              AI-Powered Medication Safety Intelligence
+              Clinical Decision Support Platform
             </h2>
             <p className="text-sm text-health-100/90 leading-relaxed font-normal">
-              A clinical decision-support platform designed to assist doctors, pharmacists, and medical teams in detecting Look-Alike and Sound-Alike (LASA) medicines before prescriptions are finalized.
+              An enterprise AI surveillance system tailored for <strong>Doctors</strong>, <strong>Pharmacists</strong>, and <strong>Pharmacy Assistants</strong> to intercept Look-Alike Sound-Alike medication errors.
             </p>
           </div>
 
-          {/* Trust Indicators */}
-          <div className="relative z-10 py-6 space-y-3">
+          {/* Role Perspectives Overview */}
+          <div className="relative z-10 py-6 space-y-2.5">
             <div className="text-xs font-semibold uppercase tracking-wider text-health-200">
-              Live Cloud Security & AIML
+              Role-Adapted Clinical Perspectives
             </div>
+            
+            <div className="space-y-2 text-xs">
+              <div className="p-2.5 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10 flex items-start gap-2.5">
+                <Stethoscope className="w-4 h-4 text-emerald-300 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="block text-white font-semibold">Doctor / Prescriber</strong>
+                  <span className="text-health-100/80 text-[11px]">Prescription formulation & dual-drug alternative checks.</span>
+                </div>
+              </div>
 
-            <div className="flex items-center gap-3 text-xs bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/10">
-              <Database className="w-4 h-4 text-health-300 shrink-0" />
-              <span className="text-white font-medium">Google Firebase Authenticated & Firestore Cloud Synced</span>
-            </div>
+              <div className="p-2.5 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10 flex items-start gap-2.5">
+                <Pill className="w-4 h-4 text-sky-300 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="block text-white font-semibold">Clinical Pharmacist</strong>
+                  <span className="text-health-100/80 text-[11px]">Dispensing verification, Tall Man lettering & override audits.</span>
+                </div>
+              </div>
 
-            <div className="flex items-center gap-3 text-xs bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/10">
-              <BrainCircuit className="w-4 h-4 text-health-300 shrink-0" />
-              <span className="text-white font-medium">Hybrid AI: Levenshtein, Phonetic & BioBERT</span>
-            </div>
-
-            <div className="flex items-center gap-3 text-xs bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/10">
-              <Activity className="w-4 h-4 text-health-300 shrink-0" />
-              <span className="text-white font-medium">Real-Time POCA Orthographic Risk Scoring</span>
+              <div className="p-2.5 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10 flex items-start gap-2.5">
+                <FileCheck className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="block text-white font-semibold">Pharmacy Assistant / Tech (Naive Mode)</strong>
+                  <span className="text-health-100/80 text-[11px]">Intuitive Green/Yellow/Red traffic-light alerts & 1-click pharmacist sign-off.</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Academic Footer Tag */}
-          <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] text-health-200">
-            <span>Honours AIML Project</span>
-            <span>AY 2026-27</span>
+          <div className="relative z-10 pt-4 border-t border-white/15 text-[11px] text-health-200/90 flex items-center justify-between">
+            <span>FDA POCA & ISMP Compliant</span>
+            <span className="flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Active Surveillance
+            </span>
           </div>
         </div>
 
-        {/* Right Form (7 cols) */}
-        <div className="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between">
+        {/* Right Authentication Form (7 cols) */}
+        <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-between bg-white dark:bg-surface-900 transition-colors">
           <div className="max-w-md mx-auto w-full">
-            {/* Header / Mode Switcher */}
-            <div className="mb-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-health-50 border border-health-200 text-health-700 text-xs font-medium mb-3">
-                <Stethoscope className="w-3.5 h-3.5" />
-                <span>Doctor & Clinician Portal</span>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-xl font-bold text-surface-900 dark:text-surface-100">
+                  {mode === 'signin' ? 'Sign In to Clinical Terminal' : 'Create Clinical Account'}
+                </h3>
+                <p className="text-xs text-surface-500 dark:text-surface-400 mt-1">
+                  Access role-tailored medication safety intelligence.
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-surface-900">
-                {mode === 'signin' ? 'Sign in to your clinical account' : 'Create a clinician account'}
-              </h3>
-              <p className="text-xs text-surface-500 mt-1">
-                {mode === 'signin' 
-                  ? 'Access the LASA medication safety engine and real-time alert center.' 
-                  : 'Register your clinical credentials to access medication safety intelligence.'}
-              </p>
+              <ThemeToggle />
+            </div>
 
-              {/* Mode Toggle Buttons */}
-              <div className="flex bg-surface-100 p-1 rounded-xl mt-4 border border-surface-200">
+            {/* Quick 1-Click Role Access */}
+            <div className="mb-6 p-4 rounded-2xl bg-surface-50 dark:bg-surface-800/60 border border-surface-200 dark:border-surface-700/60">
+              <div className="flex items-center justify-between mb-2.5">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-surface-600 dark:text-surface-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-health-600" />
+                  <span>1-Click Clinical Role Access</span>
+                </span>
+                <span className="text-[10px] text-surface-400">Click to enter as:</span>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
-                  onClick={() => { setMode('signin'); setErrorMessage(null); }}
-                  className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
-                    mode === 'signin'
-                      ? 'bg-white text-health-700 shadow-sm'
-                      : 'text-surface-600 hover:text-surface-900'
-                  }`}
+                  onClick={() => handleRoleQuickLogin('Doctor')}
+                  className="p-2.5 rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 hover:border-health-400 hover:bg-health-50/50 dark:hover:bg-health-950/40 text-left transition-all group cursor-pointer"
                 >
-                  Sign In
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 flex items-center justify-center text-xs font-bold shrink-0">
+                      🩺
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold text-surface-900 dark:text-surface-100 group-hover:text-health-700 dark:group-hover:text-health-400 truncate">
+                        Doctor
+                      </div>
+                      <div className="text-[10px] text-surface-400 truncate">Dr. Sarah Mitchell</div>
+                    </div>
+                  </div>
                 </button>
+
                 <button
                   type="button"
-                  onClick={() => { setMode('signup'); setErrorMessage(null); }}
-                  className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
-                    mode === 'signup'
-                      ? 'bg-white text-health-700 shadow-sm'
-                      : 'text-surface-600 hover:text-surface-900'
-                  }`}
+                  onClick={() => handleRoleQuickLogin('Pharmacist')}
+                  className="p-2.5 rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 hover:border-health-400 hover:bg-health-50/50 dark:hover:bg-health-950/40 text-left transition-all group cursor-pointer"
                 >
-                  Create Account
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-700 dark:text-sky-400 flex items-center justify-center text-xs font-bold shrink-0">
+                      💊
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold text-surface-900 dark:text-surface-100 group-hover:text-health-700 dark:group-hover:text-health-400 truncate">
+                        Pharmacist
+                      </div>
+                      <div className="text-[10px] text-surface-400 truncate">James Wilson, RPh</div>
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleRoleQuickLogin('Assistant')}
+                  className="p-2.5 rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 hover:border-amber-400 hover:bg-amber-50/50 dark:hover:bg-amber-950/40 text-left transition-all group cursor-pointer"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-400 flex items-center justify-center text-xs font-bold shrink-0">
+                      📋
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold text-surface-900 dark:text-surface-100 group-hover:text-amber-700 dark:group-hover:text-amber-400 truncate">
+                        Assistant
+                      </div>
+                      <div className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold truncate">Naive Guided Mode</div>
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleRoleQuickLogin('Admin')}
+                  className="p-2.5 rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 hover:border-purple-400 hover:bg-purple-50/50 dark:hover:bg-purple-950/40 text-left transition-all group cursor-pointer"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-purple-100 dark:bg-purple-950/80 text-purple-700 dark:text-purple-400 flex items-center justify-center text-xs font-bold shrink-0">
+                      🛡️
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold text-surface-900 dark:text-surface-100 group-hover:text-purple-700 dark:group-hover:text-purple-400 truncate">
+                        Safety Director
+                      </div>
+                      <div className="text-[10px] text-surface-400 truncate">Dr. Alex Vance</div>
+                    </div>
+                  </div>
                 </button>
               </div>
             </div>
 
-            {/* Quick Demo Helper Box */}
-            <div className="mb-4 p-3 rounded-xl bg-health-50/80 border border-health-200 flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-health-600" />
-                  <p className="text-xs font-semibold text-health-900">1-Click Doctor Access</p>
-                </div>
-                <p className="text-[11px] text-health-700">Dr. Aniruddha Kule (Doctor / Medical Officer)</p>
-              </div>
+            {/* Mode Switcher Tab */}
+            <div className="flex bg-surface-100 dark:bg-surface-800 p-1 rounded-xl mb-5">
               <button
                 type="button"
-                onClick={handleQuickDemo}
-                disabled={isLoading}
-                className="px-3 py-1.5 rounded-lg bg-health-600 text-white text-xs font-semibold hover:bg-health-700 transition-colors flex items-center gap-1.5 shadow-sm disabled:opacity-50 cursor-pointer"
+                onClick={() => setMode('signin')}
+                className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                  mode === 'signin'
+                    ? 'bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 shadow-xs'
+                    : 'text-surface-600 dark:text-surface-400 hover:text-surface-900'
+                }`}
               >
-                {isLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <ArrowRight className="w-3.5 h-3.5" />}
-                <span>Auto Sign In</span>
+                Sign In
+              </button>
+              <button
+                type="button"
+                onClick={() => setMode('signup')}
+                className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                  mode === 'signup'
+                    ? 'bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 shadow-xs'
+                    : 'text-surface-600 dark:text-surface-400 hover:text-surface-900'
+                }`}
+              >
+                Create Account
               </button>
             </div>
 
-            {/* Error Message Banner */}
+            {/* Notifications */}
             {errorMessage && (
-              <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2.5">
-                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
+              <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-300 text-xs flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-500" />
                 <span>{errorMessage}</span>
               </div>
             )}
 
-            {/* Success Message Banner */}
             {successMessage && (
-              <div className="mb-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+              <div className="mb-4 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
                 <span>{successMessage}</span>
               </div>
             )}
 
+            {/* Sign In / Sign Up Form */}
             <form onSubmit={handleSubmit} className="space-y-3.5">
-              {/* Extra fields on Register Mode */}
               {mode === 'signup' && (
                 <>
                   <div>
-                    <label className="block text-xs font-semibold text-surface-700 mb-1">
+                    <label className="block text-xs font-semibold text-surface-700 dark:text-surface-300 mb-1">
                       Full Name & Title
                     </label>
                     <div className="relative">
                       <User className="w-4 h-4 text-surface-400 absolute left-3 top-3 pointer-events-none" />
                       <input
                         type="text"
-                        placeholder="e.g. Dr. Aniruddha Kule"
+                        placeholder="Dr. Jane Doe / James Smith, RPh"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         required
-                        className="w-full bg-surface-50 border border-surface-200 rounded-xl pl-9 pr-3 py-2 text-xs text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-health-500/20 focus:border-health-600 transition-all"
+                        className="w-full bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-xl pl-9 pr-3 py-2 text-xs text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-hidden focus:ring-2 focus:ring-health-500/20"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-surface-700 mb-1">
+                    <label className="block text-xs font-semibold text-surface-700 dark:text-surface-300 mb-1">
                       Clinical Role
                     </label>
                     <select
                       value={role}
-                      onChange={(e) => setRole(e.target.value)}
-                      className="w-full bg-surface-50 border border-surface-200 rounded-xl px-3 py-2 text-xs text-surface-900 focus:outline-none focus:ring-2 focus:ring-health-500/20 focus:border-health-600 transition-all"
+                      onChange={(e) => setRole(e.target.value as ClinicalRole)}
+                      className="w-full bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-xl px-3 py-2 text-xs text-surface-900 dark:text-surface-100 focus:outline-hidden focus:ring-2 focus:ring-health-500/20"
                     >
-                      <option value="Doctor">Doctor / Physician</option>
-                      <option value="Clinical Pharmacist">Clinical Pharmacist</option>
-                      <option value="Nurse Practitioner">Nurse Practitioner</option>
-                      <option value="Medical Officer">Resident / Medical Officer</option>
+                      <option value="Doctor">Doctor / Prescriber</option>
+                      <option value="Pharmacist">Clinical Pharmacist</option>
+                      <option value="Assistant">Pharmacy Assistant / Tech (Naive Mode)</option>
+                      <option value="Admin">Patient Safety Director / Admin</option>
                     </select>
                   </div>
                 </>
               )}
 
-              {/* Email Address */}
+              {/* Email */}
               <div>
-                <label className="block text-xs font-semibold text-surface-700 mb-1">
+                <label className="block text-xs font-semibold text-surface-700 dark:text-surface-300 mb-1">
                   Professional Email Address
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 text-surface-400 absolute left-3 top-3 pointer-events-none" />
                   <input
                     type="email"
-                    placeholder="doctor@hospital.org"
+                    placeholder="clinician@hospital.org"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full bg-surface-50 border border-surface-200 rounded-xl pl-9 pr-3 py-2 text-xs text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-health-500/20 focus:border-health-600 transition-all"
+                    className="w-full bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-xl pl-9 pr-3 py-2 text-xs text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-hidden focus:ring-2 focus:ring-health-500/20"
                   />
                 </div>
               </div>
@@ -311,14 +361,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               {/* Password */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-xs font-semibold text-surface-700">
+                  <label className="block text-xs font-semibold text-surface-700 dark:text-surface-300">
                     Password
                   </label>
-                  {mode === 'signin' && (
-                    <span className="text-[11px] text-surface-400">
-                      Minimum 6 characters
-                    </span>
-                  )}
+                  <span className="text-[11px] text-surface-400">Minimum 6 characters</span>
                 </div>
                 <div className="relative">
                   <Lock className="w-4 h-4 text-surface-400 absolute left-3 top-3 pointer-events-none" />
@@ -328,7 +374,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="w-full bg-surface-50 border border-surface-200 rounded-xl pl-9 pr-10 py-2 text-xs text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-health-500/20 focus:border-health-600 transition-all"
+                    className="w-full bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-xl pl-9 pr-10 py-2 text-xs text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-hidden focus:ring-2 focus:ring-health-500/20"
                   />
                   <button
                     type="button"
@@ -340,32 +386,20 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs pt-1">
-                <label className="flex items-center gap-2 cursor-pointer text-surface-600">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="rounded border-surface-300 text-health-600 focus:ring-health-500"
-                  />
-                  <span>Remember this clinical terminal</span>
-                </label>
-              </div>
-
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-2.5 px-4 rounded-xl bg-health-600 hover:bg-health-700 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                className="w-full py-2.5 px-4 rounded-xl bg-health-600 hover:bg-health-700 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 mt-2"
               >
                 {isLoading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Connecting to Firebase Auth...</span>
+                    <span>Authenticating...</span>
                   </>
                 ) : (
                   <>
                     <span>
-                      {mode === 'signin' ? 'Sign In with Firebase' : 'Create Firebase Clinician Account'}
+                      {mode === 'signin' ? 'Sign In to Workspace' : 'Create Account'}
                     </span>
                     <ArrowRight className="w-4 h-4" />
                   </>

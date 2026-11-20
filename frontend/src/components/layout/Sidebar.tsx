@@ -63,7 +63,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 w-68 bg-white border-r border-surface-200 flex flex-col justify-between transition-transform duration-200 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-40 w-68 bg-white dark:bg-surface-900 border-r border-surface-200 dark:border-surface-800 flex flex-col justify-between transition-transform duration-200 ease-in-out ${
           isMobileOpen ? 'translate-x-0' : '-translate-x-full'
         } ${
           isOpenDesktop ? 'lg:translate-x-0' : 'lg:-translate-x-full'
@@ -71,19 +71,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
       >
         {/* Top Branding & Close Button */}
         <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-          <div className="h-16 px-4 border-b border-surface-200 flex items-center justify-between shrink-0">
+          <div className="h-16 px-4 border-b border-surface-200 dark:border-surface-800 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="w-10 h-10 shrink-0 rounded-xl bg-health-600 flex items-center justify-center text-white shadow-sm ring-2 ring-health-600/20">
                 <ShieldAlert className="w-6 h-6" />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-base tracking-tight text-surface-900">LASA-SAFE</span>
-                  <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-health-100 text-health-800 shrink-0">
-                    AIML
+                  <span className="font-extrabold text-base tracking-tight text-surface-900 dark:text-surface-100">LASA-GUARD</span>
+                  <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-health-100 dark:bg-health-950/80 text-health-800 dark:text-health-300 shrink-0">
+                    CLINICAL AI
                   </span>
                 </div>
-                <p className="text-[11px] text-surface-500 font-medium truncate">Medication Error Prevention</p>
+                <p className="text-[11px] text-surface-500 dark:text-surface-400 font-medium truncate">Medication Error Prevention</p>
               </div>
             </div>
 
@@ -195,19 +195,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
           {/* Logged in User Profile */}
           {(() => {
-            const name = currentUser?.displayName || currentUser?.email?.split('@')[0] || 'Dr. Aniruddha Kule';
-            const role = currentUser?.role || 'Doctor';
-            const initials = name.split(' ').map(p => p[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() || 'DR';
+            const name = currentUser?.displayName || currentUser?.email?.split('@')[0] || 'Clinical User';
+            const role = currentUser?.role || 'Clinician';
+            const initials = name.split(' ').map(p => p[0]).filter(c => c && /[A-Za-z]/.test(c)).slice(-2).join('').toUpperCase() || 'CU';
             return (
-              <div className="flex items-center justify-between p-2 rounded-xl bg-white border border-surface-200/80 shadow-2xs">
+              <div className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-surface-850 border border-surface-200/80 dark:border-surface-750 shadow-2xs transition-colors">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 shrink-0 rounded-full bg-health-100 border border-health-200 flex items-center justify-center text-health-700 font-bold text-xs uppercase">
+                  <div className="w-8 h-8 shrink-0 rounded-full bg-health-100 dark:bg-health-950/80 border border-health-200 dark:border-health-800 flex items-center justify-center text-health-700 dark:text-health-300 font-bold text-xs uppercase">
                     {initials}
                   </div>
                   <div className="overflow-hidden min-w-0">
-                    <p className="text-xs font-semibold text-surface-900 truncate" title={name}>{name}</p>
-                    <p className="text-[11px] text-surface-500 font-medium flex items-center gap-1 truncate">
-                      <User className="w-3 h-3 text-health-600 shrink-0" />
+                    <p className="text-xs font-semibold text-surface-900 dark:text-surface-100 truncate" title={name}>{name}</p>
+                    <p className="text-[11px] text-surface-500 dark:text-surface-400 font-medium flex items-center gap-1 truncate">
+                      <User className="w-3 h-3 text-health-600 dark:text-health-400 shrink-0" />
                       <span className="truncate">{role}</span>
                     </p>
                   </div>
@@ -216,9 +216,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <button
                   type="button"
                   onClick={onLogout}
-                  title="Sign Out of Firebase"
+                  title="Sign Out of Clinical Session"
                   aria-label="Sign Out"
-                  className="p-1.5 rounded-lg text-surface-400 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0 cursor-pointer"
+                  className="p-1.5 rounded-lg text-surface-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors shrink-0 cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
